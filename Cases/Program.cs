@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Threading;
 
 namespace Cases
 {
@@ -11,25 +12,14 @@ namespace Cases
         static void Main(string[] args)
         {
             Console.WriteLine("Program starting...");
-            Console.WriteLine();
+            Console.Title = "Cases Program";
+            Thread.Sleep(2000);
+            Console.Clear();
+            Login.StartLogin();
+            Console.Clear();
+            Console.WriteLine("Test");
 
             Console.ReadKey();
         }
     }
-
-    static class Fodbold
-    {
-
-    }
-
-    static class Dansekonkurrence
-    {
-
-    }
-
-    static class Password
-    {
-
-    }
-
 }
