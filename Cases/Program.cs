@@ -15,11 +15,24 @@ namespace Cases
             Console.Title = "Cases Program";
             Thread.Sleep(2000);
             Console.Clear();
-            Login.StartLogin();
+            if(Login.StartLogin())
+            {
+
+            } else
+            {
+                Console.Clear();
+                Console.WriteLine("Fejl: Genstat programmet og prøv igen");
+            }
             Console.Clear();
             Console.WriteLine("Test");
 
             Console.ReadKey();
+        }
+
+        public static void ErrorMsg(string msg)
+        {
+            Console.WriteLine("\n" + msg);
+            Thread.Sleep(3000);
         }
     }
 }
