@@ -142,9 +142,8 @@ namespace Cases
                         Program.ErrorMsg("Du kan ikke ændre dit password til et tideligere password");
                     }
                     
-            };
+                };
             }
-
         }
 
         public static bool LoginHandler(string user, string pass)
