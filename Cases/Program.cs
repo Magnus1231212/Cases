@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Threading;
+using System.IO;
 
 namespace Cases
 {
@@ -11,9 +12,16 @@ namespace Cases
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Program starting...");
+            string tempCheck = Path.Combine(Directory.GetCurrentDirectory() + "/data.txt");
+            if (!File.Exists(tempCheck))
+            {
+                Console.Clear();
+                Console.WriteLine("Kunne ikke finde data.txt");
+                Console.WriteLine("Opret venligst filen og prøv igen");
+                Console.ReadKey();
+                System.Environment.Exit(0);
+            }
             Console.Title = "Cases Program";
-            Thread.Sleep(2000);
             Console.Clear();
             if(Login.StartLogin())
             {
@@ -22,9 +30,10 @@ namespace Cases
             {
                 Console.Clear();
                 Console.WriteLine("Fejl: Genstat programmet og prøv igen");
+                Console.ReadKey();
+                System.Environment.Exit(0);
             }
-            Console.Clear();
-            Console.WriteLine("Test");
+            Menu.Build();
 
             Console.ReadKey();
         }
