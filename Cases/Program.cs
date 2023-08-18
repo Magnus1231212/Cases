@@ -12,16 +12,25 @@ namespace Cases
     {
         static void Main(string[] args)
         {
-            string tempCheck = Path.Combine(Directory.GetCurrentDirectory() + "/data.txt");
-            if (!File.Exists(tempCheck))
-            {
-                Console.Clear();
-                Console.WriteLine("Kunne ikke finde data.txt");
-                Console.WriteLine("Opret venligst filen og prøv igen");
-                Console.ReadKey();
-                System.Environment.Exit(0);
-            }
             Console.Title = "Cases Program";
+            string tempCheck = Path.Combine(Directory.GetCurrentDirectory() + "/data/");
+            if (!Directory.Exists(tempCheck))
+            {
+                Console.WriteLine("Data Mappe ikke fundet");
+                Directory.CreateDirectory(tempCheck);
+                Console.WriteLine("Data Mappe Oprettet\n");
+                Thread.Sleep(2000);
+            }
+            if (!File.Exists(tempCheck + "/data.txt"))
+            {
+                Console.WriteLine("Data Fil ikke fundet");
+                var Cfile = File.Create(tempCheck + "/data.txt");
+                Cfile.Close();
+                Console.WriteLine("Data Fil Oprettet\n");
+                Thread.Sleep(2000);
+            }
+            Console.WriteLine("Indlæser...");
+            Thread.Sleep(2000);
             Console.Clear();
             if(Login.StartLogin())
             {
@@ -34,8 +43,6 @@ namespace Cases
                 System.Environment.Exit(0);
             }
             Menu.Build();
-
-            Console.ReadKey();
         }
 
         public static void ErrorMsg(string msg)

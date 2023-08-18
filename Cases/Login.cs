@@ -23,7 +23,7 @@ namespace Cases
                 Console.WriteLine("Vælg hvad du vil.\n");
                 Console.WriteLine("1. Login via eksisterende bruger");
                 Console.WriteLine("2. Opret ny bruger");
-                Console.WriteLine("3. Ændre password på eksisterende bruger\n");
+                Console.WriteLine("3. Exit\n");
                 Console.Write("Valg: ");
 
                 try
@@ -55,7 +55,7 @@ namespace Cases
                         }
                     case 3:
                         {
-                            UserReset();
+                            System.Environment.Exit(0);
                             break;
                         }
                     default:
@@ -97,82 +97,52 @@ namespace Cases
             return false;
         }
 
-        public static void UserReset()
+        public static void UserReset(string _user)
         {
             bool done = false;
-            bool pdone = false; 
-            bool udone = false;
             string npassword = null;
-            string user = null;
+            string user = _user;
 
             while (!done)
             {
-                pdone = false;
-                udone = false;
                 Console.Clear();
-                while (!udone)
+                Console.WriteLine("Velkommen til Password Reset siden!\n");
+                Console.WriteLine("Indtast dit nye pasword");
+                Console.Write("Password: ");
+                npassword = Console.ReadLine();
+                if (string.IsNullOrEmpty(npassword))
                 {
-                    Console.Clear();
-                    Console.WriteLine("Velkommen til Password Reset siden!\n");
-                    Console.WriteLine("Indtast venligst dit brugernavn");
-                    Console.Write("Brugernavn: ");
-                    user = Console.ReadLine();
-                    if (string.IsNullOrEmpty(user))
+                    Program.ErrorMsg("Du kan ikke have et tomt password");
+                }
+                else if (npassword.Length < 12)
+                {
+                    Program.ErrorMsg("Du skal indtaste et password der er længere end 12 tegn");
+                }
+                else if (!npassword.Any(upper => char.IsUpper(upper)) || !npassword.Any(lower => char.IsLower(lower)) || !npassword.Any(degit => char.IsDigit(degit)))
+                {
+                    Program.ErrorMsg("Dit password skal indeholde både små og store bogstaver og tal");
+                }
+                else if (char.IsDigit(npassword[0]) || char.IsDigit(npassword[npassword.Length - 1]))
+                {
+                    Program.ErrorMsg("Der må ikke være tal i starten og slutningen af passwordet");
+                }
+                else if (npassword.Any(space => char.IsWhiteSpace(space)))
+                {
+                    Program.ErrorMsg("Der må ikke være mellemrum i dit password");
+                }
+                else
+                {
+                    if (changeUsr(user, npassword))
                     {
-                        Program.ErrorMsg("Kunne ikke finde din bruger");
-                    }
-                    else if (user.Any(space => char.IsWhiteSpace(space)))
-                    {
-                        Program.ErrorMsg("Kunne ikke finde din bruger");
+                        Program.ErrorMsg("Dit password er nu ændret");
+                        done = true;
                     }
                     else
                     {
-                        udone = true;
+                        Program.ErrorMsg("Du kan ikke ændre dit password til et tideligere password");
                     }
-                };
-
-                while (!pdone)
-                {
-                    Console.Clear();
-                    Console.WriteLine("Velkommen til Password Reset siden!\n");
-                    Console.WriteLine("Indtast dit nye pasword");
-                    Console.Write("Password: ");
-                    npassword = Console.ReadLine();
-                    if (string.IsNullOrEmpty(npassword))
-                    {
-                        Program.ErrorMsg("Du kan ikke have et tomt password");
-                    }
-                    else if (npassword.Length < 12)
-                    {
-                        Program.ErrorMsg("Du skal indtaste et password der er længere end 12 tegn");
-                    }
-                    else if (!npassword.Any(upper => char.IsUpper(upper)) || !npassword.Any(lower => char.IsLower(lower)) || !npassword.Any(degit => char.IsDigit(degit)))
-                    {
-                        Program.ErrorMsg("Dit password skal indeholde både små og store bogstaver og tal");
-                    }
-                    else if (char.IsDigit(npassword[0]) || char.IsDigit(npassword[npassword.Length - 1]))
-                    {
-                        Program.ErrorMsg("Der må ikke være tal i starten og slutningen af passwordet");
-                    }
-                    else if (npassword.Any(space => char.IsWhiteSpace(space)))
-                    {
-                        Program.ErrorMsg("Der må ikke være mellemrum i dit password");
-                    }
-                    else
-                    {
-                        if (changeUsr(user, npassword))
-                        {
-                            Program.ErrorMsg("Dit password er nu ændret");
-                            pdone = true;
-                            done = true;
-                        }
-                        else
-                        {
-                            Program.ErrorMsg("Kunne ikke finde brugeren");
-                            pdone = true;
-                        }
-                    }
-                };
+                    
+            };
             }
 
         }
@@ -181,7 +151,7 @@ namespace Cases
         {
             bool auth = false;
             string[] sdata = null;
-            string path = Path.Combine(Directory.GetCurrentDirectory() + "/data.txt");
+            string path = Path.Combine(Directory.GetCurrentDirectory() + "/data/data.txt");
             string[] data = File.ReadAllLines(path);
             int length = data.Length;
             for (int i = 0; i < length; i++)
@@ -203,8 +173,8 @@ namespace Cases
         {
             bool ufound = false;
             string[] sdata = null;
-            string path = Path.Combine(Directory.GetCurrentDirectory() + "/data.txt");
-            string[] data = File.ReadAllLines(path);
+            string path = Path.Combine(Directory.GetCurrentDirectory(), "data");
+            string[] data = File.ReadAllLines(Path.Combine(path, "data.txt"));
             foreach (string udata in data)
             {
                 sdata = udata.Split(' ');
@@ -215,8 +185,12 @@ namespace Cases
             }
             if (!ufound)
             {
-                string[] saveData = new string[] {pass};
-                File.AppendAllLines(path, saveData);
+                string[] saveData = new string[] {user + " " + pass};
+                File.AppendAllLines(Path.Combine(path, "data.txt"), saveData);
+                var cFile = File.Create(Path.Combine(path, user + "_data.txt"));
+                cFile.Close();
+                string[] addPass = new string[] { pass };
+                File.AppendAllLines(Path.Combine(path, user + "_data.txt"), addPass);
                 return "";
             }
             return "User Was Found";
@@ -225,9 +199,11 @@ namespace Cases
         public static bool changeUsr(string user, string npass)
         {
             int ufound = -1;
+            bool rfound = false;
             string[] sdata = null;
-            string path = Path.Combine(Directory.GetCurrentDirectory() + "/data.txt");
-            string[] data = File.ReadAllLines(path);
+            string path = Path.Combine(Directory.GetCurrentDirectory(), "data");
+            string[] data = File.ReadAllLines(Path.Combine(path, "data.txt"));
+            string[] updata = File.ReadAllLines(Path.Combine(path, user + "_data.txt"));
             int length = data.Length;
             for (int i = 0; i < length; i++)
             {
@@ -239,9 +215,24 @@ namespace Cases
             }
             if (ufound != -1)
             {
-                data[ufound] = user + " " + npass;
-                File.WriteAllLines(path, data);
-                return true;
+                foreach (string up in updata)
+                {
+                    if(up == npass)
+                    {
+                        rfound = true;
+                    }
+                }
+                if (rfound)
+                {
+                    return false;
+                } else
+                {
+                    data[ufound] = user + " " + npass;
+                    File.WriteAllLines(Path.Combine(path, "data.txt"), data);
+                    string[] addPass = new string[] { npass };
+                    File.AppendAllLines(Path.Combine(path, user + "_data.txt"), addPass);
+                    return true;
+                }
             }
             return false;
         }
