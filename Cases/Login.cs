@@ -130,6 +130,10 @@ namespace Cases
                 {
                     Program.ErrorMsg("Der må ikke være mellemrum i dit password");
                 }
+                else if (!CheckSymbols(npassword))
+                {
+                    Program.ErrorMsg("Der Skal være speciale karktere i dit password");
+                }
                 else
                 {
                     if (changeUsr(user, npassword))
@@ -242,6 +246,24 @@ namespace Cases
             return false;
         }
 
+        public static bool CheckSymbols(string text)
+        {
+            bool isValid = false;
+            char[] symbols = new char[] { '!', '"', '#', '$', '%', '&', '\'', '(', ')', '*', '+', ',', '-', '.', '/', ':', ';', '<', '=', '>', '?', '@', '[', '\\', ']', '^', '_', '`', '{', '|', '}', '~' };
+            foreach (char symbol in symbols)
+            {
+                if(text.Contains(symbol))
+                {
+                    isValid = true;
+                }
+            }
+            if(isValid)
+            {
+                return true;
+            }
+            return false;
+        }
+
         public static void UserSetup()
         {
             string username = null;
@@ -293,6 +315,8 @@ namespace Cases
                     } else if (password.Any(space => char.IsWhiteSpace(space)))
                     {
                         Program.ErrorMsg("Der må ikke være mellemrum i dit password");
+                    }else if (!CheckSymbols(password)) {
+                        Program.ErrorMsg("Der Skal være speciale karktere i dit password");
                     }
                     else
                     {
