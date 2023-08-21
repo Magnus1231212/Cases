@@ -45,10 +45,21 @@ namespace Cases
                 {
                     case 1:
                         {
+                            Console.WriteLine(Fodbold.FodboldLogic());
+                            Thread.Sleep(3000);
                             break;
                         }
                     case 2:
                         {
+                            Dans person1 = new Dans();
+                            Dans person2 = new Dans();
+
+                            person1.setData();
+                            person2.setData();
+
+                            Dans par = person1 + person2;
+
+                            Console.WriteLine("{0} {1}", par.Name, par.Points);
                             break;
                         }
                     case 3:

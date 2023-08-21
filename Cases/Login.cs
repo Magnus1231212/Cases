@@ -91,7 +91,7 @@ namespace Cases
 
                 } else
                 {
-                    Program.ErrorMsg("Kunne ikke logge ind!");
+                    Program.ErrorMsg("brugernavn eller password er forkert angivet!");
                 }
             }
             return false;
