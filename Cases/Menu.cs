@@ -51,6 +51,7 @@ namespace Cases
                         }
                     case 2:
                         {
+                            Console.Clear();
                             Dans person1 = new Dans();
                             Dans person2 = new Dans();
 
@@ -60,6 +61,7 @@ namespace Cases
                             Dans par = person1 + person2;
 
                             Console.WriteLine("{0} {1}", par.Name, par.Points);
+                            Thread.Sleep(4000);
                             break;
                         }
                     case 3:
