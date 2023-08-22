@@ -17,11 +17,11 @@ namespace Cases
             bool exit = false;
             Console.Clear();
             Console.Title = "Main Menu";
-            Console.WriteLine("Velkommen " + mname + "\n");
 
             do
             {
                 Console.Clear();
+                Console.WriteLine("Velkommen " + mname + "\n");
                 Console.WriteLine("Vælg hvad du vil.\n");
                 Console.WriteLine("1. Fodbold");
                 Console.WriteLine("2. Dans");

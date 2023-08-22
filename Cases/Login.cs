@@ -172,12 +172,6 @@ namespace Cases
             return false;
         }
 
-        public static bool symbolcheck(string tekst)
-        {
-            char[] symbols = new char[] { '!', '"', '#', '$', '%', '&', '\'', '(', ')', '*', '+', ',', '-', '.', '/', ':', ';', '<', '=', '>', '?', '@', '[', '\\', ']', '^', '_', '`', '{', '|', '}', '~' };
-            return true;
-        }
-
         public static string addUsr(string user, string pass)
         {
             bool ufound = false;
