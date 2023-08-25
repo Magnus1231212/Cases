@@ -11,9 +11,9 @@ namespace Cases
 {
     internal class Login
     {
-        public static string MenuName { get; set; }
+        public string MenuName { get; set; }
 
-        public static bool StartLogin()
+        public bool StartLogin()
         {
             bool IsLoggedIn = false;
             int choice = 0;
@@ -69,7 +69,7 @@ namespace Cases
             return true;
         }
 
-        public static bool UserLogin()
+        public bool UserLogin()
         {
             bool done = false;
             string pass = null;
@@ -97,7 +97,7 @@ namespace Cases
             return false;
         }
 
-        public static void UserReset(string _user)
+        public void UserReset(string _user)
         {
             bool done = false;
             string npassword = null;
@@ -150,7 +150,7 @@ namespace Cases
             }
         }
 
-        public static bool LoginHandler(string user, string pass)
+        public bool LoginHandler(string user, string pass)
         {
             bool auth = false;
             string[] sdata = null;
@@ -172,7 +172,7 @@ namespace Cases
             return false;
         }
 
-        public static string addUsr(string user, string pass)
+        public string addUsr(string user, string pass)
         {
             bool ufound = false;
             string[] sdata = null;
@@ -199,7 +199,7 @@ namespace Cases
             return "User Was Found";
         }
 
-        public static bool changeUsr(string user, string npass)
+        public bool changeUsr(string user, string npass)
         {
             int ufound = -1;
             bool rfound = false;
@@ -240,7 +240,7 @@ namespace Cases
             return false;
         }
 
-        public static bool CheckSymbols(string text)
+        public bool CheckSymbols(string text)
         {
             bool isValid = false;
             char[] symbols = new char[] { '!', '"', '#', '$', '%', '&', '\'', '(', ')', '*', '+', ',', '-', '.', '/', ':', ';', '<', '=', '>', '?', '@', '[', '\\', ']', '^', '_', '`', '{', '|', '}', '~' };
@@ -258,7 +258,7 @@ namespace Cases
             return false;
         }
 
-        public static void UserSetup()
+        public void UserSetup()
         {
             string username = null;
             string password = null;

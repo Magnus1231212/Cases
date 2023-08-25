@@ -32,7 +32,8 @@ namespace Cases
             Console.WriteLine("Indlæser...");
             Thread.Sleep(2000);
             Console.Clear();
-            if(Login.StartLogin())
+            Login login = new Login();
+            if(login.StartLogin())
             {
 
             } else
@@ -42,7 +43,8 @@ namespace Cases
                 Console.ReadKey();
                 System.Environment.Exit(0);
             }
-            Menu.Build();
+            Menu menu = new Menu();
+            menu.Build();
         }
 
         public static void ErrorMsg(string msg)

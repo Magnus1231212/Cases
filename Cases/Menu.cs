@@ -9,10 +9,10 @@ namespace Cases
 {
     internal class Menu
     {
-        public static void Build()
+        public void Build()
         {
             Login cUser = new Login();
-            string mname = Login.MenuName;
+            string mname = cUser.MenuName;
             int choice = 0;
             bool exit = false;
             Console.Clear();
@@ -45,7 +45,8 @@ namespace Cases
                 {
                     case 1:
                         {
-                            Console.WriteLine(Fodbold.FodboldLogic());
+                            Fodbold fodbold = new Fodbold();
+                            Console.WriteLine(fodbold.FodboldLogic());
                             Thread.Sleep(3000);
                             break;
                         }
@@ -66,7 +67,7 @@ namespace Cases
                         }
                     case 3:
                         {
-                            Login.UserReset(mname);
+                            cUser.UserReset(mname);
                             break;
                         }
                     case 4:

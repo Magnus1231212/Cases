@@ -8,7 +8,7 @@ namespace Cases
 {
     internal class Fodbold
     {
-        public static string FodboldLogic() {
+        public string FodboldLogic() {
             Console.Clear();
             Console.Write("Skriv input: ");
             int.TryParse(Console.ReadLine(), out int passeings);
