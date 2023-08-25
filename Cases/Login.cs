@@ -11,7 +11,7 @@ namespace Cases
 {
     internal class Login
     {
-        public string MenuName { get; set; }
+        public static string MenuName { get; set; }
 
         public bool StartLogin()
         {

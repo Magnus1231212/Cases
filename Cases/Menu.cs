@@ -11,8 +11,7 @@ namespace Cases
     {
         public void Build()
         {
-            Login cUser = new Login();
-            string mname = cUser.MenuName;
+            string mname = Login.MenuName;
             int choice = 0;
             bool exit = false;
             Console.Clear();
@@ -67,6 +66,7 @@ namespace Cases
                         }
                     case 3:
                         {
+                            Login cUser = new Login();
                             cUser.UserReset(mname);
                             break;
                         }
